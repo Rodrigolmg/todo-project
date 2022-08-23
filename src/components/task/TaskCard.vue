@@ -5,11 +5,14 @@
 </template>
 
 <script>
+import bus from "@/script/bus";
+
 export default {
-    props:['taskText'],
+    props:{ 
+        taskObj: Object
+    },
     data(){
         return {
-            taskTxt: this.taskText,
             isDone: false,
             doneStyle: {
                 'text-decoration': 'line-through',
@@ -21,9 +24,10 @@ export default {
     methods:{
         isClicked(){
             this.isDone = !this.isDone
+            this.taskObj.taskDone = this.isDone
+            bus.addTaskDone(this.taskObj)
         }
     }
-
 }
 </script>
 

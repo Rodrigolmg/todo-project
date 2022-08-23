@@ -16,9 +16,14 @@ export default {
         }
     },
     methods:{
-        addingTask(task){
-            bus.addTask(task)
-            this.taskText = ''
+        addingTask(taskT){
+            if(taskT != ''){
+                bus.addTask({
+                    taskDescript: taskT,
+                    taskDone: false
+                })
+                this.taskText = ''
+            }
         }
     }
 }
@@ -26,6 +31,12 @@ export default {
 
 
 <style scoped>
+
+    div{
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+
     button{
         background-color: rgb(77, 162, 241);
         color: #fff;

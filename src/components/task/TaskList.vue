@@ -1,7 +1,7 @@
 <template>
     <div class="task-list">
-        <TaskCard v-for="task in tasksReceived" :key="task">
-            <span>{{ task }}</span>
+        <TaskCard v-for="taskObj in tasksReceived" :key="taskObj.taskDescript" :taskObj="taskObj">
+            <span>{{ taskObj.taskDescript }}</span>
         </TaskCard>
     </div>
 </template>
@@ -11,6 +11,9 @@ import bus from "@/script/bus";
 import TaskCard from './TaskCard.vue'
 
 export default {
+    props:{
+        taskReceived:{ type: Array, required: false}
+    },
     components: {TaskCard},
     data(){
         return {
@@ -18,8 +21,7 @@ export default {
         }
     },
     created(){
-        bus.getTask(task => this.tasksReceived.push(task))
-        bus.setTaskList(this.tasksReceived)
+        bus.getTask(taskR => this.tasksReceived = taskR)
     }
     
 }

@@ -1,17 +1,32 @@
 import Vue from 'vue'
 export default new Vue({
+
+    data(){
+        return {
+            taskList: [],
+        }
+    },
     methods:{
         addTask(task){
-            this.$emit('addingTask', task)
+            this.taskList.push(task)
+            this.$emit('addingTask', this.taskList)
         },
         getTask(callback){
             this.$on('addingTask', callback)
         },
-        setTaskList(taskList){
-            this.$emit('settingTaskList', taskList)
+        addTaskDone(task){
+            if(this.taskList.length > 0){
+                for(const taskO of this.taskList){
+                    if(taskO.taskDescript === task.taskDescript){
+                        taskO.taskDone = !taskO.taskDone
+                        break
+                    }
+                }
+            }
+            this.$emit('editingDoneList', this.taskList)
         },
-        getTaskList(callback){
-            this.$on('settingTaskList', callback)
+        getTaskDoneList(callback){
+            this.$on('editingDoneList', callback)
         },
     }
 })
