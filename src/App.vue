@@ -1,12 +1,19 @@
 <template>
 	<div id="app">
 		<h1>Tarefas</h1>
+		<TaskText/>
+		<br/>
+		<br/>
+		<TaskList/>
 	</div>
 </template>
 
 <script>
-export default {
+import TaskText from './components/task/TaskText.vue'
+import TaskList from './components/task/TaskList.vue'
 
+export default {
+	components: {TaskText, TaskList}	
 }
 </script>
 
