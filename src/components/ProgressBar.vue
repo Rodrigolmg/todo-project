@@ -1,49 +1,41 @@
 <template>
-    <div id="outter-div">
-        <span>{{ this.percent }}%</span>
-        <div id="inner-div">
-
-        </div>
+    <div class="outter-div">
+        <span class="progress-value">{{ percentDone }}%</span>
+        <div class="progress-div" :style="{width: percentDone + '%'}"></div>
     </div>
 </template>
 
 <script>
-import bus from "@/script/bus";
 
 export default {
-    
-    data(){
-        return {
-            // taskList: [],
-            percent: 0
-        }
+    props:{
+        percentDone: {type: Number, default: 0}
     },
-    methods:{
-        setTaskPercent(list){
-
-            let taskListLength = list.length // 100%
-            console.log(taskListLength)
-            let doneListLength = list.filter(taskFiltered => !taskFiltered.taskDone).length
-            console.log(doneListLength)
-            this.percent = (taskListLength * 100) / doneListLength
-            return  isNaN(this.percent) ? 0 : this.percent
-            
-        }
-    },
-    create(){
-        bus.getTaskDoneList(list => this.setTaskPercent(list))
-    }
 }
 </script>
 
 <style scoped>
-    #outter-div {
-        display: flex;
+    .outter-div {
+        position: relative;
         width: 60%;
         border: 1px solid #fff;
-        height: 1.3em;
+        color: #fff;
         border-radius: 5px;
-        justify-content: center;
-        vertical-align: middle;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 1.3em;
+    }
+
+    .progress-div{
+        background-color: rgb(42, 189, 42);
+        position: absolute;
+        border-radius: 5px;
+        height: 100%;
+        align-self: flex-start;
+    }
+
+    .progress-value {
+        z-index: 1;
     }
 </style>

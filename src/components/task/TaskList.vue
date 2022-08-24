@@ -1,35 +1,48 @@
 <template>
     <div class="task-list">
-        <TaskCard v-for="taskObj in tasksReceived" :key="taskObj.taskDescript" :taskObj="taskObj">
-            <span>{{ taskObj.taskDescript }}</span>
-        </TaskCard>
+        <template v-if="tasks.length">
+            <TaskCard v-for="(taskObj, i) in tasks" :key="taskObj.taskDescript" 
+                      :taskObj="taskObj"
+                      @deleteTask="removingTask(i)" @taskStateChanged="changeTaskState(i)"/>
+        </template>
+        <p v-else class="no-task">Your life is running good!</p>
     </div>
 </template>
 
 <script>
-import bus from "@/script/bus";
 import TaskCard from './TaskCard.vue'
 
 export default {
     props:{
-        taskReceived:{ type: Array, required: false}
+        tasks:{ type: Array, required: false}
     },
     components: {TaskCard},
-    data(){
-        return {
-            tasksReceived: []
+    methods: {
+        removingTask(i){
+            this.$emit('deleteTask', i)
+        },
+        changeTaskState(i){
+            this.$emit('taskStateChanged', i)
         }
-    },
-    created(){
-        bus.getTask(taskR => this.tasksReceived = taskR)
     }
+    // data(){
+    //     return {
+    //         tasksReceived: []
+    //     }
+    // },
     
 }
 </script>
 
 <style scoped>
     div{
-        align-content: center;
+        justify-content: center;
         display: flex;
+        flex-wrap: wrap;
+    }
+
+    .no-task {
+        color: #AAA;
+        font-size: 1.1rem;
     }
 </style>

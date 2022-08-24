@@ -1,3 +1,4 @@
+/* USED ON THE FIRST VERSION */
 import Vue from 'vue'
 export default new Vue({
 
@@ -7,26 +8,28 @@ export default new Vue({
         }
     },
     methods:{
-        addTask(task){
-            this.taskList.push(task)
-            this.$emit('addingTask', this.taskList)
+        // addTaskDone(task){
+        //     if(this.taskList.length > 0){
+        //         for(const taskO of this.taskList){
+        //             if(taskO.taskDescript === task.taskDescript){
+        //                 taskO['taskDone'] = !taskO['taskDone']
+        //                 break
+        //             }
+        //         }
+        //     }
+        //     this.$emit('editingDoneList', this.taskList)
+        // },
+        // getTaskDoneList(callback){
+        //     this.$on('editingDoneList', callback)
+        // },
+        deleteTask(index){
+            this.$emit('deleteTask', index)
         },
-        getTask(callback){
-            this.$on('addingTask', callback)
+        doingTask(task){
+            this.$emit(task.taskDone ? 'taskCompleted' : 'taskPending', task)
         },
-        addTaskDone(task){
-            if(this.taskList.length > 0){
-                for(const taskO of this.taskList){
-                    if(taskO.taskDescript === task.taskDescript){
-                        taskO.taskDone = !taskO.taskDone
-                        break
-                    }
-                }
-            }
-            this.$emit('editingDoneList', this.taskList)
-        },
-        getTaskDoneList(callback){
-            this.$on('editingDoneList', callback)
-        },
+        removingFromList(callback){
+            this.$on('deleteTask', callback)
+        }
     }
 })
